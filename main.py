@@ -61,6 +61,10 @@ def handle_dialog(res, req):
                 {
                     'title': 'Нет',
                     'hide': True
+                },
+                {
+                    'title': 'Что это?',
+                    'hide': True
                 }
             ]
     else:
@@ -86,6 +90,23 @@ def handle_dialog(res, req):
             elif 'нет' in req['request']['nlu']['tokens']:
                 res['response']['text'] = 'Ну и ладно!'
                 res['end_session'] = True
+            elif '' in req['request']['nlu']['tokens']:
+                res['response']['text'] = 'Это игра, где я показываю фото города, а ты отгадываешь' \
+                                          ', что это за город. Дальше что?'
+                res['response']['buttons'] = [
+                    {
+                        'title': 'Да',
+                        'hide': True
+                    },
+                    {
+                        'title': 'Нет',
+                        'hide': True
+                    },
+                    {
+                        'title': 'Что это?',
+                        'hide': True
+                    }
+                ]
             else:
                 res['response']['text'] = 'Не поняла ответа! Так да или нет?'
                 res['response']['buttons'] = [
@@ -95,6 +116,10 @@ def handle_dialog(res, req):
                     },
                     {
                         'title': 'Нет',
+                        'hide': True
+                    },
+                    {
+                        'title': 'Что это?',
                         'hide': True
                     }
                 ]
