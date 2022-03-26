@@ -90,7 +90,7 @@ def handle_dialog(res, req):
             elif 'нет' in req['request']['nlu']['tokens']:
                 res['response']['text'] = 'Ну и ладно!'
                 res['end_session'] = True
-            elif 'Что это?' in req['request']['nlu']['tokens']:
+            elif 'что это?' in req['request']['nlu']['tokens']:
                 res['response']['text'] = 'Это игра, где я показываю фото города, а ты отгадываешь' \
                                           ', что это за город. Дальше что?'
                 res['response']['buttons'] = [
