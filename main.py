@@ -45,14 +45,15 @@ def handle_dialog(res, req):
     if sessionStorage[user_id]['first_name'] is None:
         first_name = get_first_name(req)
         if first_name is None:
-            res['response']['text'] = 'Не расслышала имя. Повтори, пожалуйста!'
+            res['response']['text'] = 'Не, не подходит. Давай другое.'
         else:
             sessionStorage[user_id]['first_name'] = first_name
             # создаём пустой массив, в который будем записывать города, которые пользователь уже отгадал
             sessionStorage[user_id]['guessed_cities'] = []
             # как видно из предыдущего навыка, сюда мы попали, потому что пользователь написал своем имя.
             # Предлагаем ему сыграть и два варианта ответа "Да" и "Нет".
-            res['response']['text'] = f'Приятно познакомиться, {first_name.title()}. Я Алиса. Отгадаешь город по фото?'
+            res['response']['text'] = f'Приятно познакомиться, {first_name.title()}. Я Алиса. Отга' \
+                                      f'даешь город по фото?'
             res['response']['buttons'] = [
                 {
                     'title': 'Да',
@@ -63,7 +64,7 @@ def handle_dialog(res, req):
                     'hide': True
                 },
                 {
-                    'title': 'Что это?',
+                    'title': 'помоги',
                     'hide': True
                 }
             ]
@@ -90,7 +91,7 @@ def handle_dialog(res, req):
             elif 'нет' in req['request']['nlu']['tokens']:
                 res['response']['text'] = 'Ну и ладно!'
                 res['end_session'] = True
-            elif 'что это?' in req['request']['nlu']['tokens']:
+            elif 'помоги' in req['request']['nlu']['tokens']:
                 res['response']['text'] = 'Это игра, где я показываю фото города, а ты отгадываешь' \
                                           ', что это за город. Дальше что?'
                 res['response']['buttons'] = [
@@ -103,7 +104,7 @@ def handle_dialog(res, req):
                         'hide': True
                     },
                     {
-                        'title': 'Что это?',
+                        'title': 'помоги',
                         'hide': True
                     }
                 ]
@@ -119,7 +120,7 @@ def handle_dialog(res, req):
                         'hide': True
                     },
                     {
-                        'title': 'Что это?',
+                        'title': 'помоги',
                         'hide': True
                     }
                 ]
