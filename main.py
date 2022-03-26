@@ -2,6 +2,7 @@ from flask import Flask, request
 import logging
 import json
 import random
+import os
 
 app = Flask(__name__)
 
@@ -60,10 +61,6 @@ def handle_dialog(res, req):
                 {
                     'title': 'Нет',
                     'hide': True
-                },
-                {
-                    'title': 'Что это?',
-                    'hide': True
                 }
             ]
     else:
@@ -89,25 +86,8 @@ def handle_dialog(res, req):
             elif 'нет' in req['request']['nlu']['tokens']:
                 res['response']['text'] = 'Ну и ладно!'
                 res['end_session'] = True
-            elif 'помощь' in req['request']['nlu']['tokens']:
-                res['response']['text'] = 'Правила! Я показываю картинку какого-то города, ты пишешь название этого ' \
-                                          'города. Дальше по новой, пока не отгадаешь всё! Понятно?'
-                res['response']['buttons'] = [
-                    {
-                        'title': 'Да',
-                        'hide': True
-                    },
-                    {
-                        'title': 'Нет',
-                        'hide': True
-                    },
-                    {
-                        'title': 'Помоги ещё раз',
-                        'hide': True
-                    }
-                ]
             else:
-                res['response']['text'] = 'Не поняла ответа! Так да или нет? Или помочь?'
+                res['response']['text'] = 'Не поняла ответа! Так да или нет?'
                 res['response']['buttons'] = [
                     {
                         'title': 'Да',
@@ -115,10 +95,6 @@ def handle_dialog(res, req):
                     },
                     {
                         'title': 'Нет',
-                        'hide': True
-                    },
-                    {
-                        'title': 'Помоги',
                         'hide': True
                     }
                 ]
@@ -196,4 +172,5 @@ def get_first_name(req):
 
 
 if __name__ == '__main__':
-    app.run()
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
